@@ -1,0 +1,7 @@
+RewriteEngine on
+
+#if direct url (file) doesn't exist => RewriteRule ^.*$ ./index.php
+RewriteCond %{SCRIPT_FILENAME} !-d
+#if direct url (directory) doesn't exist => RewriteRule ^.*$ ./index.php
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteRule ^.*$ ./index.php

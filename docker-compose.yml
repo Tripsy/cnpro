@@ -1,0 +1,16 @@
+
+version: '3.7'
+services:
+    www:
+        build:
+            context: .
+            dockerfile: php.dockerfile
+        ports:
+            - "80:80"
+        volumes:
+            - ./public_html:/var/www/html/
+            - ./.config/php.ini:/usr/local/etc/php/php.ini
+            - ./.logs/error.log:/var/log/apache2/error.log
+            - ./.logs/access.log:/var/log/apache2/access.log
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
