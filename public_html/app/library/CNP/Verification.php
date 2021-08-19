@@ -6,9 +6,9 @@
 *
 *****************************************************************************/
 
-namespace Test\Library;
+namespace Tripsy\Library\CNP;
 
-class CNPVerification extends \Test\Library\Error
+class Verification extends \Tripsy\Library\Error
 {
     private $string;
     private const CONTROL_NUMBER = 279146358279;
@@ -25,14 +25,12 @@ class CNPVerification extends \Test\Library\Error
                     ->checkControlDigit($this->string, 'control_number_fail');
     }
 
-    public function validateData(\Test\Library\CNPData $obj_cnp) : string {
-        $cnp_data = $obj_cnp->getData();
-
-        return $this->is_empty($cnp_data['county_code_key'], 'invalid_county_code')
-                    ->is_date($cnp_data['birthdate'], 'invalid_birthdate');
+    public function validateData(\Tripsy\Library\CNP\Data $cnp_data) : string {
+        return $this->is_empty($cnp_data->getCountyKey(), 'invalid_county_code')
+                    ->is_date($cnp_data->getBirthdate(), 'invalid_birthdate');
     }
 
-    private function checkControlDigit($var, $msg) {
+    private function checkControlDigit($var, $msg) : self {
 		//condition
 		if ($this->message) {
             //return
@@ -51,7 +49,7 @@ class CNPVerification extends \Test\Library\Error
 		return $this;
     }
 
-    private function calculateControlDigit($var) {
+    private function calculateControlDigit($var) : int {
         $control_number_array = str_split(self::CONTROL_NUMBER);
 
         $total = 0;

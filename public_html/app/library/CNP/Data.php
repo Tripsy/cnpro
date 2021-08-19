@@ -1,22 +1,21 @@
 <?php
 /*****************************************************************************
-* library/CNPData.php
+* library/cnp/Data.php
 *
 * Author: David Gabriel
 *
 *****************************************************************************/
 
-namespace Test\Library;
+namespace Tripsy\Library\CNP;
 
-class CNPData
+class Data
 {
     private $string;
-    private $data = array(
-        'gender' => null,
-        'birthdate' => null,
-        'county_code_key' => null,
-        'county_code_name' => null,
-    );
+
+    private $gender;
+    private $birthdate;
+    private $county_key;
+    private $county_name;
 
     private const ARR_COUNTY_CODE = array(
         '01' => 'Alba',
@@ -73,54 +72,65 @@ class CNPData
         $this->string = trim($string);
     }
 
-    public function getData() {
-        $this->extractGender();
-        $this->extractBirthdate();
-        $this->extractCountyCode();
+    public function getGender() : string {
+        if ($this->gender) {
+            return $this->gender;
+        }
 
-        return $this->data;
-    }
-
-    private function extractGender() {
         if (isset($this->string[0])) {
             if (in_array($this->string[0], array('1', '3', '5', '7'))) {
-                $this->data['gender'] = 'male';
+                $this->gender = 'male';
             } else if  (in_array($this->string[0], array('2', '4', '6', '8'))) {
-                $this->data['gender'] = 'female';
+                $this->gender = 'female';
             } else if ($this->string[0] == '9') {
-                $this->data['gender'] = 'n/a';
+                $this->gender = 'n/a';
             }
         }
+
+        return $this->gender;
     }
 
-    private function extractBirthdate() {
+    public function getBirthdate() : string {
+        if ($this->birthdate) {
+            return $this->birthdate;
+        }
+
         if (strlen($this->string) == 13) {
-            $this->data['birthdate'] = $this->string[1].$this->string[2].'-'.$this->string[3].$this->string[4].'-'.$this->string[5].$this->string[6];
+            $birthdate = $this->string[1].$this->string[2].'-'.$this->string[3].$this->string[4].'-'.$this->string[5].$this->string[6];
 
             if (in_array($this->string[0], array('1', '2'))) {
-                $this->data['birthdate'] = '19'.$this->data['birthdate'];
+                $this->birthdate = '19'.$birthdate;
             } else if (in_array($this->string[0], array('3', '4'))) {
-                $this->data['birthdate'] = '18'.$this->data['birthdate'];
+                $this->birthdate = '18'.$birthdate;
             } else if (in_array($this->string[0], array('5', '6'))) {
-                $this->data['birthdate'] = '20'.$this->data['birthdate'];
+                $this->birthdate = '20'.$birthdate;
             }
         }
+
+        return $this->birthdate;
     }
 
-    private function extractCountyCode() {
+    public function getCountyKey() : int {
+        if ($this->county_key) {
+            return $this->county_key;
+        }
+
         if (strlen($this->string) == 13) {
             $k = $this->string[7].$this->string[8];
 
-            if ($n = $this->getCountyName($k)) {
-                $this->data['county_code_key'] = $k;
-                $this->data['county_code_name'] = $n;
+            if ($this->getCountyName($k)) {
+                $this->county_key = $k;
             }
         }
+
+        return $this->county_key;
     }
 
-    public function getCountyName($k) {
+    public function getCountyName(int $k) : string {
         if (array_key_exists($k, self::ARR_COUNTY_CODE)) {
-            return self::ARR_COUNTY_CODE[$k];
+            $this->county_name = self::ARR_COUNTY_CODE[$k];
         }
+
+        return $this->county_name;
     }
 }

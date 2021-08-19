@@ -22,12 +22,12 @@ require_once '../vendor/autoload.php';
 $cnp = isset($_GET['cnp']) ? $_GET['cnp'] : '';
 //$cnp = '1910217410067';
 
-$obj_cnp_verification = new \Test\Library\CNPVerification($cnp);
-$error = $obj_cnp_verification->validateFormat();
+$cnp_check = new \Tripsy\Library\CNP\Verification($cnp);
+$error = $cnp_check->validateFormat();
 
 if (!$error) {
-    $obj_cnp_data = new \Test\Library\CNPData($cnp);
-    $error = $obj_cnp_verification->validateData($obj_cnp_data); //additional check for birthdate and county code
+    $cnp_data = new \Tripsy\Library\CNP\Data($cnp);
+    $error = $cnp_check->validateData($cnp_data); //additional check for birthdate and county code
 }
 
 if ($error) {

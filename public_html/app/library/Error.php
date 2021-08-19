@@ -6,7 +6,7 @@
 *
 *****************************************************************************/
 
-namespace Test\Library;
+namespace Tripsy\Library;
 
 class Error
 {
@@ -34,7 +34,7 @@ class Error
 		//condition
 		if ($this->message) {
             //return
-            return $this; //break if message already set -> this enable chain verification
+            return $this;
         }
 
 		//message
@@ -48,7 +48,7 @@ class Error
 		//condition
 		if ($this->message) {
             //return
-            return $this; //break if message already set -> this enable chain verification
+            return $this;
         }
 
 		//condition
@@ -65,7 +65,7 @@ class Error
 		//condition
 		if ($this->message) {
             //return
-            return $this; //break if message already set -> this enable chain verification
+            return $this;
         }
 
 		//case
@@ -93,7 +93,7 @@ class Error
 		//condition
 		if ($this->message) {
             //return
-            return $this; //break if message already set -> this enable chain verification
+            return $this;
         }
 
 		//verification
@@ -120,7 +120,7 @@ class Error
 		//condition
 		if ($this->message) {
             //return
-            return $this; //break if message already set -> this enable chain verification
+            return $this;
         }
 
         //verification
@@ -144,7 +144,7 @@ class Error
 		//condition
 		if ($this->message) {
             //return
-            return $this; //break if message already set -> this enable chain verification
+            return $this;
         }
 
 		//verification
@@ -161,7 +161,7 @@ class Error
 		//condition
 		if ($this->message) {
             //return
-            return $this; //break if message already set -> this enable chain verification
+            return $this;
         }
 
 		//verification
@@ -178,7 +178,7 @@ class Error
 		//condition
 		if ($this->message) {
             //return
-            return $this; //break if message already set -> this enable chain verification
+            return $this;
         }
 
 		//verification
@@ -195,7 +195,7 @@ class Error
 		//condition
 		if ($this->message) {
             //return
-            return $this; //break if message already set -> this enable chain verification
+            return $this;
         }
 
 		//verification
@@ -212,7 +212,7 @@ class Error
 		//condition
 		if ($this->message) {
             //return
-            return $this; //break if message already set -> this enable chain verification
+            return $this;
         }
 
 		//verification
@@ -227,7 +227,7 @@ class Error
 		//condition
 		if ($this->message) {
             //return
-            return $this; //break if message already set -> this enable chain verification
+            return $this;
         }
 
 		//verification
@@ -265,7 +265,7 @@ class Error
 		//condition
 		if ($this->message) {
             //return
-            return $this; //break if message already set -> this enable chain verification
+            return $this;
         }
 
         //vars
@@ -284,7 +284,7 @@ class Error
 		//condition
 		if ($this->message) {
             //return
-            return $this; //break if message already set -> this enable chain verification
+            return $this;
         }
 
 		//verification
@@ -298,7 +298,7 @@ class Error
 		//condition
 		if ($this->message) {
             //return
-            return $this; //break if message already set -> this enable chain verification
+            return $this;
         }
 
 		//verification
