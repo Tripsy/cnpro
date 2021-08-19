@@ -11,7 +11,7 @@ namespace Tripsy\Library\CNP;
 class Verification extends \Tripsy\Library\Error
 {
     /**
-     * @var string value to verify.
+     * @var string string to verify.
      */
     private $string;
 
