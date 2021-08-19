@@ -29,7 +29,7 @@ class Verification extends \Tripsy\Library\Error
     }
 
     /**
-     * Format verification for cnp string
+     * Format verification for CNP string
      *
      * @return string
      */
@@ -37,11 +37,11 @@ class Verification extends \Tripsy\Library\Error
         return $this->is_empty($this->string, 'empty_string')
                     ->is_length($this->string, 13, 13, 'invalid_length')
                     ->is_number($this->string, 'invalid_chars')
-                    ->is_true($this->checkControlDigit($this->string) === false, 'control_number_fail');
+                    ->is_false($this->isValidControlDigit($this->string), 'control_number_fail');
     }
 
     /**
-     * Extra verification for data consistency
+     * Data consistency verification for CNP string
      *
      * @param \Tripsy\Library\CNP\Data $cnp_data
      *
@@ -55,29 +55,29 @@ class Verification extends \Tripsy\Library\Error
     /**
      * Verification for control digit
      *
-     * @param mixed $var
+     * @param string $var
      *
      * @return bool
      */
-    private function checkControlDigit($var) : bool {
+    private function isValidControlDigit(string $var) : bool {
         $control_digit = $this->calculateControlDigit($var);
 
         //compoare 13 with calculated control digit
-        if(!isset($var[12]) || $control_digit != $var[12]) {
-            return false;
+        if(isset($var[12]) && $control_digit == $var[12]) {
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     /**
-     * Calculate control digit based on cnp string
+     * Calculate control digit based on $var ~ CNP string
      *
-     * @param mixed $var
+     * @param string $var
      *
      * @return int
      */
-    private function calculateControlDigit($var) : int {
+    private function calculateControlDigit(string $var) : int {
         $control_number_array = str_split(self::CONTROL_NUMBER);
 
         $total = 0;

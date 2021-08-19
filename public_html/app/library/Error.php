@@ -62,6 +62,24 @@ class Error
 	}
 
 	/**
+	 * @param bool $expr
+	 * @param string $msg
+	 *
+	 * @return self
+	 */
+	public function is_false(bool $expr, string $msg) : self {
+		if ($this->message) {
+            return $this;
+        }
+
+        if ($expr === false) {
+            $this->message = $msg;
+        }
+
+		return $this;
+	}
+
+	/**
 	 * @param mixed $var
 	 * @param string $case
 	 * @param string $msg
