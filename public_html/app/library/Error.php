@@ -10,7 +10,7 @@ namespace Tripsy\Library;
 
 class Error
 {
-	public $message = '';
+	public $message;
 
 	public function __construct() {
 	}
@@ -19,86 +19,89 @@ class Error
         return is_null($this->message) ? '' : $this->message;
     }
 
-	public function is_error() {
-        //condition
+	/**
+	 * @return bool
+	 */
+	public function is_error() : bool {
 		if ($this->message) {
-			//return
 			return true;
-		} else {
-			//return
-			return false;
 		}
+
+        return false;
 	}
 
-	public function is_test() {
-		//condition
+	/**
+	 * @return self
+	 */
+	public function is_test() : self {
 		if ($this->message) {
-            //return
             return $this;
         }
 
-		//message
 		$this->message = 'test';
 
-		//return
 		return $this;
 	}
 
-	public function is_true($expr, $msg) {
-		//condition
+	/**
+	 * @param bool $expr
+	 * @param string $msg
+	 *
+	 * @return self
+	 */
+	public function is_true(bool $expr, string $msg) : self {
 		if ($this->message) {
-            //return
             return $this;
         }
 
-		//condition
         if ($expr === true) {
-            //vars
             $this->message = $msg;
         }
 
-		//return
 		return $this;
 	}
 
-	public function is_param($var, $case, $msg) {
-		//condition
+	/**
+	 * @param mixed $var
+	 * @param string $case
+	 * @param string $msg
+	 *
+	 * @return self
+	 */
+	public function is_param($var, string $case, string $msg) : self {
 		if ($this->message) {
-            //return
             return $this;
         }
 
-		//case
 		switch ($case) {
             case 'page':
                 if (!preg_match('/^\d+$/', $var) || $var < 0) {
-                    //vars
                     $this->message = $msg;
                 }
                 break;
 
             case 'limit':
                 if (!preg_match('/^\d+$/', $var) || $var < 0) {
-                    //vars
                     $this->message = $msg;
                 }
                 break;
         }
 
-		//return
 		return $this;
 	}
 
-	public function is_empty($var, $msg) {//check if value is empty
-		//condition
+	/**
+	 * @param string $var
+	 * @param string $msg
+	 *
+	 * @return self
+	 */
+	public function is_empty(string $var, string $msg) : self {
 		if ($this->message) {
-            //return
             return $this;
         }
 
-		//verification
 		if (empty($var)) {
-            //vars
             $this->message = $msg;
         } else {
             if (is_array($var)) {
@@ -112,202 +115,230 @@ class Error
             }
         }
 
-		//return
 		return $this;
 	}
 
-	public function is_match($var_1, $var_2, $msg) {//check two values if they are equal
-		//condition
+    /**
+     * Check if $var_1 & $var_2 have same value
+     *
+	 * @param string $var_1
+	 * @param string $var_2
+	 * @param string $msg
+	 *
+	 * @return self
+	 */
+	public function is_match(string $var_1, string $var_2, string $msg) : self {
 		if ($this->message) {
-            //return
             return $this;
         }
 
-        //verification
-        if (is_array($var_2)) {
-            if (!in_array($var_1, $var_2)) {
-                //vars
-                $this->message = $msg;
-            }
-        } else {
-            if ($var_1 != $var_2) {
-                //vars
-                $this->message = $msg;
-            }
+        if ($var_1 != $var_2) {
+            $this->message = $msg;
         }
 
-		//return
 		return $this;
 	}
 
-	public function is_format($var, $format, $msg) {
-		//condition
+    /**
+     * Check $var by regex $format
+     *
+	 * @param string $var
+	 * @param string $format
+	 * @param string $msg
+	 *
+	 * @return self
+	 */
+	public function is_format(string $var, string $format, string $msg) : self {
 		if ($this->message) {
-            //return
             return $this;
         }
 
-		//verification
 		if (!preg_match($format, $var)) {
-            //vars
             $this->message = $msg;
         }
 
-		//return
 		return $this;
 	}
 
-	public function is_invalid_char($var, $special, $msg) {
-		//condition
+    /**
+     * Check if $var contains provided $invalid chars
+     *
+	 * @param string $var
+	 * @param string $invalid
+	 * @param string $msg
+	 *
+	 * @return self
+	 */
+	public function is_invalid_char(string $var, string $invalid, string $msg) : self {
 		if ($this->message) {
-            //return
             return $this;
         }
 
-		//verification
-		if (array_intersect(str_split($var), str_split($special))) {
-            //vars
+		if (array_intersect(str_split($var), str_split($invalid))) {
             $this->message = $msg;
         }
 
-		//return
 		return $this;
 	}
 
-	public function is_length_min($var, $limit, $msg) {
-		//condition
+    /**
+     * Check $min length of the $var
+     *
+	 * @param string $var
+	 * @param int $limit
+	 * @param string $msg
+	 *
+	 * @return self
+	 */
+	public function is_length_min(string $var, int $limit, string $msg) : self {
 		if ($this->message) {
-            //return
             return $this;
         }
 
-		//verification
 		if(strlen($var) < $limit) {
-            //vars
             $this->message = $msg;
         }
 
-		//return
 		return $this;
 	}
 
-	public function is_length_max($var, $limit, $msg) {
-		//condition
+    /**
+     * Check $max length of the $var
+     *
+	 * @param string $var
+	 * @param int $limit
+	 * @param string $msg
+	 *
+	 * @return self
+	 */
+	public function is_length_max(string $var, int $limit, string $msg) : self {
 		if ($this->message) {
-            //return
             return $this;
         }
 
-		//verification
 		if(strlen($var) > $limit) {
-            //vars
             $this->message = $msg;
         }
 
-		//return
 		return $this;
 	}
 
-	public function is_length($var, $min, $max, $msg) {
-		//condition
+    /**
+     * Check $min / $max $var length
+     *
+	 * @param string $var
+	 * @param int $min
+	 * @param int $max
+	 * @param string $msg
+	 *
+	 * @return self
+	 */
+	public function is_length(string $var, int $min, int $max, string $msg) : self {
 		if ($this->message) {
-            //return
             return $this;
         }
 
-		//verification
 		$this->is_length_min($var, $min, $msg);
 		$this->is_length_max($var, $max, $msg);
 
-		//return
 		return $this;
 	}
 
-	public function is_number($var, $msg, $min = null, $max = null) {
-		//condition
+    /**
+     * Check string if is a valid float number
+     *
+	 * @param string $var
+	 * @param string $msg
+	 * @param int|null $min
+	 * @param int|null $max
+	 *
+	 * @return self
+	 */
+	public function is_number(string $var, string $msg, int $min = null, int $max = null) : self {
 		if ($this->message) {
-            //return
             return $this;
         }
 
-		//verification
         if(!preg_match('~^\d+(.\d+)?$~', $var)) {
-            //vars
             $this->message = $msg;
 
-            //return
             return $this;
         }
 
-		//verification
         if(!is_null($min) && $var < $min) {
-            //vars
             $this->message = $msg;
 
-            //return
             return $this;
         }
 
-		//verification
         if(!is_null($max) && $var > $max) {
-            //vars
             $this->message = $msg;
 
-            //return
             return $this;
         }
 
-		//return
 		return $this;
     }
 
-	public function is_date($var, $msg, $format = 'Y-m-d') {//check if value is date (eg: YYYY-MM-DD)
-		//condition
+    /**
+     * Check if string is date based on the provided $format
+     *
+	 * @param string $var
+	 * @param string $msg
+	 * @param string $format
+	 *
+	 * @return self
+	 */
+	public function is_date(string $var, string $msg, string $format = 'Y-m-d') : self {
 		if ($this->message) {
-            //return
             return $this;
         }
 
-        //vars
         $d = \DateTime::createFromFormat($format, $var);
 
-        //condition
         if (!$d || $d->format($format) != $var) {
             $this->message = $msg;
         }
 
-		//return
 		return $this;
 	}
 
-	public function is_link($var, $msg) {//check if value is link
-		//condition
+    /**
+     * Check link format
+     *
+	 * @param string $var
+	 * @param string $msg
+	 *
+	 * @return self
+	 */
+	public function is_link(string $var, string $msg) : self {
 		if ($this->message) {
-            //return
             return $this;
         }
 
-		//verification
 		$this->is_format($var, '/^(http|https):\/\/([A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?/i', $msg);
 
-		//return
 		return $this;
 	}
 
-	public function in_array($var, $array, $msg) {
-		//condition
+    /**
+     * Check string is in $array
+     *
+	 * @param string $var
+	 * @param array $array
+	 * @param string $msg
+	 *
+	 * @return self
+	 */
+	public function in_array(string $var, array $array, string $msg) : self {
 		if ($this->message) {
-            //return
             return $this;
         }
 
-		//verification
 		if(in_array($var, $array) === false) {
-            //vars
             $this->message = $msg;
         }
 
-		//return
 		return $this;
 	}
 }

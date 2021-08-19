@@ -68,10 +68,18 @@ class Data
         '52' => 'Giurgiu',
     );
 
+    /**
+     * @param string $string
+     */
     public function __construct(string $string) {
         $this->string = trim($string);
     }
 
+    /**
+     * Extract gender value (male, female OR n/a) from string (cnp)
+     *
+     * @return string
+     */
     public function getGender() : string {
         if ($this->gender) {
             return $this->gender;
@@ -90,6 +98,11 @@ class Data
         return $this->gender;
     }
 
+    /**
+     * Extract birthdate value (Y-m-d) from string (cnp)
+     *
+     * @return string
+     */
     public function getBirthdate() : string {
         if ($this->birthdate) {
             return $this->birthdate;
@@ -98,6 +111,7 @@ class Data
         if (strlen($this->string) == 13) {
             $birthdate = $this->string[1].$this->string[2].'-'.$this->string[3].$this->string[4].'-'.$this->string[5].$this->string[6];
 
+            //add year prefix
             if (in_array($this->string[0], array('1', '2'))) {
                 $this->birthdate = '19'.$birthdate;
             } else if (in_array($this->string[0], array('3', '4'))) {
@@ -107,9 +121,14 @@ class Data
             }
         }
 
-        return $this->birthdate;
+        return $this->birthdate; //string Y-m-d
     }
 
+    /**
+     * Return county code key if defined
+     *
+     * @return int
+     */
     public function getCountyKey() : int {
         if ($this->county_key) {
             return $this->county_key;
@@ -125,7 +144,13 @@ class Data
 
         return $this->county_key;
     }
-
+    /**
+     * Return county name if defined
+     *
+     * @param int $k
+     *
+     * @return string
+     */
     public function getCountyName(int $k) : string {
         if (array_key_exists($k, self::ARR_COUNTY_CODE)) {
             $this->county_name = self::ARR_COUNTY_CODE[$k];
