@@ -31,22 +31,22 @@ class Verification extends \Tripsy\Library\Error
     }
 
     private function checkControlDigit($var, $msg) : self {
-		//condition
-		if ($this->message) {
+        //condition
+        if ($this->message) {
             //return
-            return $this; //break if message already set -> this enable chain verification
+            return $this;
         }
 
         $control_digit = $this->calculateControlDigit($var);
 
-		//verification
-		if(!isset($var[12]) || $control_digit != $var[12]) {
+        //verification
+        if(!isset($var[12]) || $control_digit != $var[12]) {
             //vars
             $this->message = $msg;
         }
 
-		//return
-		return $this;
+        //return
+        return $this;
     }
 
     private function calculateControlDigit($var) : int {
